@@ -25,17 +25,14 @@ vr3.createCollection( { name: settings.collection_name },
 
           //. metadata
           var metadatajson = "{\"filename\":\"" + file + "\"}";
-          var metadatafile = "./uploads/" + file + ".json";
-          fs.writeFileSync( metadatafile, metadatajson );
 
           //. addImage
           var params = {
             collection_id: collection_id,
-            metadata: fs.createReadStream( metadatafile ),
+            metadata: JSON.parse( metadatajson ),
             image_file: fs.createReadStream( './public/images/' + file )
           };
           vr3.addImage( params, function( err1, res1 ){
-            fs.unlink( metadatafile, function( err ){} );
           });
         });
       });
